@@ -1,0 +1,92 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: black;
+    align-items: center;
+    max-width: 100%;
+    color: white;
+    font-family: 'Press Start 2P';
+    text-align: center;
+    line-height: 1.5;
+    /* overflow: hidden; */
+}
+button{
+  cursor: pointer;
+}
+.box{
+    max-width: 40rem;
+    padding: 2rem 0;
+    margin: 5% auto;
+    border-radius: 10px;
+    background-color: #e2df22;
+    background: linear-gradient(to top left, #28b487, hsl(112, 90%, 61%));
+}
+.settings{
+    height: 5rem;
+}
+.reset{
+    border: none;
+  float: left;
+  font-size: 2rem;
+  background-color: black;
+  color: inherit;
+  font-family: inherit;
+  padding: .5rem 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.reset:hover{
+    border: solid .3rem;
+  background-color: white;
+  padding: .2rem .7rem;
+  color: black;
+}
+.tok{
+    border-radius: 0px;
+    border: none;
+    background-color: black;
+    color: inherit;
+    font-size: 2rem;
+    padding: .5rem 2rem;
+    float: right;
+    font-family: inherit;
+}
+.tok:hover{
+    border: solid .3rem black;
+    padding: .2rem 1.7rem;
+
+}
+.O{
+  margin-right: 1rem;
+  color:black;
+  background-color: white;
+}
+.matrix{
+    margin: 2rem 3rem;
+ 
+}
+.cell{
+    border: solid .3rem;
+    height: 6rem;
+    width: 6rem;
+    margin: .125rem 0;
+    font-size: 2rem;
+    font-family: inherit;
+  padding: 1.5rem 1.5rem;
+}
+.cell:hover {
+    background-color:rgb(211, 219, 219);
+}
+.msg1{
+    position: relative;
+    font-size: 2rem;
+    color: black;
+}
+.msg2{
+    position: relative;
+    font-size: 2rem;
+    color: black;
+}
