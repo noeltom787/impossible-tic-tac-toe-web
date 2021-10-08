@@ -177,6 +177,12 @@ function myMove(i, j, checkWin, triplet) {
         checkWin = 2;
       }
     }
+    if (triplet === 'c') {
+      if (cells[i][j] === mytok && cells[i][j-1] && cells[i][j+1]) {
+        triplet = 'c';
+        checkWin = 2;
+      }
+    }
   }
   if (checkWin === 2) {                        //check if algorithm won
     changeColor(i, j, triplet);
