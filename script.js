@@ -179,7 +179,7 @@ function myMove(i, j, checkWin, triplet) {
     }
     if (triplet === 'c') {
       if (cells[i][j] === mytok && cells[i][j-1] && cells[i][j+1]) {
-        triplet = 'c';
+        triplet = 'r';
         checkWin = 2;
       }
     }
