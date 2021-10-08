@@ -54,10 +54,10 @@ function logic(tok, mytok, ui, uj) {
 }
 //check triplets in rows
 function checkRow() {
-  let j1 = 0;
+  let j1 = 0, my = 0, ur = 0;
+
   for (let i = 0; i < 3; i++) {
-    let my = 0,
-      ur = 0;
+    ur = 0; my = 0;
     for (let j = 0; j < 3; j++) {
       if (cells[i][j] === tok) ur++;
       else if (cells[i][j] === mytok) my++;
@@ -65,7 +65,8 @@ function checkRow() {
     }
 
     if ((ur === 2 && my === 0) || (ur === 0 && my === 2)) {
-      myMove(i, j1, my,'r');
+      myMove(i, j1, my, 'r');
+      console.log('row');
       return 1;
     }
   }
@@ -74,11 +75,10 @@ function checkRow() {
 
 //check triplets in columns
 function checkCol() {
-  let i1 = 0;
-  let my = 0,
-    ur = 0;
+  let i1 = 0, my = 0, ur = 0;
+
   for (let j = 0; j < 3; j++) {
-    (my = 0), (ur = 0);
+    my = 0; ur = 0;
     for (let i = 0; i < 3; i++) {
       if (cells[i][j] === tok) ur++;
       else if (cells[i][j] === mytok) my++;
@@ -86,7 +86,8 @@ function checkCol() {
     }
 
     if ((ur === 2 && my === 0) || (ur === 0 && my === 2)) {
-      myMove(i1, j, my,'c');
+      myMove(i1, j, my, 'c');
+      console.log('col');
       return 1;
     }
   }
@@ -157,7 +158,7 @@ function fillRest() {
       return 1;
     }
     if (cells[j][i] === 0) {
-      myMove(i, j, -1,'');
+      myMove(j, i, -1,'');
       return 1;
     }
   }
@@ -169,6 +170,14 @@ function myMove(i, j, checkWin, triplet) {
   document.querySelector("._" + String(i + 1) + String(j + 1)).textContent =
     mytok;
   count++;
+  if (count === 6) {
+    if (triplet === 'r') {
+      if (cells[i][j] === mytok && cells[i - 1][j] && cells[i + 1][j]) {
+        triplet = 'c';
+        checkWin = 2;
+      }
+    }
+  }
   if (checkWin === 2) {                        //check if algorithm won
     changeColor(i, j, triplet);
     document.querySelector('.msg1').textContent = 'YOU';
