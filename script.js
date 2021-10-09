@@ -17,11 +17,11 @@ function logic(tok, mytok, ui, uj) {
     //                                                                 - X -
     if (ui + uj === 3 || ui + uj === 1) {
       if (ui === 1) {
-        myMove(ui + 1, uj, -1,'');
+        myMove(ui + 1, uj);
         return;
       }
       if (uj === 1) {
-        myMove(ui, uj + 1, -1,'');
+        myMove(ui, uj + 1);
         return;
       }
     }
@@ -34,7 +34,7 @@ function logic(tok, mytok, ui, uj) {
       (cells[0][0] === tok && cells[1][1] === mytok && cells[2][2] === tok) ||
       (cells[2][0] === tok && cells[1][1] === mytok && cells[0][2] === tok)
     ) {
-      myMove(1, 0, -1,'');
+      myMove(1, 0);
       return;
     }
   }
@@ -45,7 +45,7 @@ function logic(tok, mytok, ui, uj) {
   if (checkCol()) return;
   //In case of no chance of triplets, fill the empty cells in the order of preference "centre cell > corners > everything else"
   if (cells[1][1] === 0) {
-    myMove(1, 1, -1,'');
+    myMove(1, 1,'');
     return;
   }
 
@@ -65,8 +65,7 @@ function checkRow() {
     }
 
     if ((ur === 2 && my === 0) || (ur === 0 && my === 2)) {
-      myMove(i, j1, my, 'r');
-      console.log('row');
+      myMove(i, j1);
       return 1;
     }
   }
@@ -86,8 +85,7 @@ function checkCol() {
     }
 
     if ((ur === 2 && my === 0) || (ur === 0 && my === 2)) {
-      myMove(i1, j, my, 'c');
-      console.log('col');
+      myMove(i1, j);
       return 1;
     }
   }
@@ -108,7 +106,7 @@ function checkDiag1() {
   }
 
   if ((ur === 2 && my === 0) || (ur === 0 && my === 2)) {
-    myMove(i1, i1, my,'d1');
+    myMove(i1, i1);
     return 1;
   }
 
@@ -132,7 +130,7 @@ function checkDiag2() {
   }
 
   if ((ur === 2 && my === 0) || (ur === 0 && my === 2)) {
-    myMove(i1, j1, my,'d2');
+    myMove(i1, j1);
     return 1;
   }
 
@@ -143,7 +141,7 @@ function fillCorners() {
   for (let i = 0; i < 3; i += 2) {
     for (let j = 0; j < 3; j += 2) {
       if (cells[i][j] === 0) {
-        myMove(i, j, -1,'');
+        myMove(i, j);
         return 1;
       }
     }
@@ -154,67 +152,81 @@ function fillCorners() {
 function fillRest() {
   for (let i = 0, j = 1; i < 2; i++, j++) {
     if (cells[i][j] === 0) {
-      myMove(i, j, -1,'');
+      myMove(i, j);
       return 1;
     }
     if (cells[j][i] === 0) {
-      myMove(j, i, -1,'');
+      myMove(j, i);
       return 1;
     }
   }
   return 0;
 }
 
-function myMove(i, j, checkWin, triplet) {
-  cells[i][j] = mytok;
-  document.querySelector("._" + String(i + 1) + String(j + 1)).textContent =
+function checkWin(r, c) {
+
+  let rowCount = 0, colCount = 0, diag1Count = 0, diag2Count = 0;
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (i === r && cells[i][j] === mytok)
+        rowCount++;
+      if (j === c && cells[i][j] === mytok)
+        colCount++;
+      if (i === j && cells[i][j] === mytok)
+        diag1Count++;
+      if (i + j === 2 && cells[i][j] === mytok)
+        diag2Count++;
+  }
+}
+let triplet='';                        //check if algorithm won
+if (rowCount === 3) triplet = 'r';
+else if (colCount === 3) triplet = 'c';
+else if (diag1Count === 3) triplet = 'd1';
+else if (diag2Count === 3) triplet = 'd2';
+  if (triplet != '') {
+     changeColor(r, c, triplet);
+     document.querySelector('.msg1').textContent = 'YOU';
+     document.querySelector('.msg2').textContent = 'LOSE!';
+     win = 1;
+     return;
+  }
+  return;
+}
+
+function myMove(r, c) {
+  cells[r][c] = mytok;
+  document.querySelector("._" + String(r + 1) + String(c + 1)).textContent =
     mytok;
   count++;
-  if (count === 6) {
-    if (triplet === 'r') {
-      if (cells[i][j] === mytok && cells[i - 1][j] && cells[i + 1][j]) {
-        triplet = 'c';
-        checkWin = 2;
-      }
-    }
-    if (triplet === 'c') {
-      if (cells[i][j] === mytok && cells[i][j-1] && cells[i][j+1]) {
-        triplet = 'r';
-        checkWin = 2;
-      }
-    }
+
+  if (count >= 6) {
+    checkWin(r, c);
   }
-  if (checkWin === 2) {                        //check if algorithm won
-    changeColor(i, j, triplet);
-    document.querySelector('.msg1').textContent = 'YOU';
-    document.querySelector('.msg2').textContent = 'LOSE!';
-      win = 1;
-      return;
-  }
+  return;
 }
 
 function changeColor(i, j, triplet) {
   console.log(triplet);
   switch (triplet) {
     case 'd1': {
-      toGreen('._11');
-      toGreen('._22');
-      toGreen('._33');
+      toRed('._11');
+      toRed('._22');
+      toRed('._33');
     } break;
     case 'd2': {
-      toGreen('._13');
-      toGreen('._22');
-      toGreen('._31');
+      toRed('._13');
+      toRed('._22');
+      toRed('._31');
     } break;
     case 'r': {
-      toGreen('._' + String(i + 1) + '1');
-      toGreen('._' + String(i + 1) + '2');
-      toGreen('._' + String(i + 1) + '3');
+      toRed('._' + String(i + 1) + '1');
+      toRed('._' + String(i + 1) + '2');
+      toRed('._' + String(i + 1) + '3');
     } break;
     case 'c': {
-      toGreen('._' + '1' + String(j + 1));
-      toGreen('._' + '2' + String(j + 1));
-      toGreen('._' + '3' + String(j + 1));
+      toRed('._' + '1' + String(j + 1));
+      toRed('._' + '2' + String(j + 1));
+      toRed('._' + '3' + String(j + 1));
       } break;
   
     default:
@@ -223,7 +235,7 @@ function changeColor(i, j, triplet) {
   return;
 }
 
-function toGreen(cell) {
+function toRed(cell) {
   document.querySelector(cell).style.backgroundColor = "#e74c3c";
 }
 
