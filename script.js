@@ -199,7 +199,7 @@ function myMove(r, c) {
     mytok;
   count++;
 
-  if (count >= 6) {
+  if (count == 6 || count == 8){
     checkWin(r, c);
   }
   return;
@@ -254,7 +254,6 @@ function onClick(cell) {                                     //handling click ev
           }
         }
         document.querySelector('.msg1').textContent = "TIE";
-        // document.querySelector('.msg2').textContent = 'TIE';
       }
       logic(tok, mytok, ui, uj);
     }
@@ -262,7 +261,6 @@ function onClick(cell) {                                     //handling click ev
 }
 
 function reset() {                                        //play again
-    document.querySelector("body").style.backgroundColor = "black";
     cells = [
       [0, 0, 0],
       [0, 0, 0],
