@@ -45,7 +45,7 @@ function logic(tok, mytok, ui, uj) {
   if (checkCol()) return;
   //In case of no chance of triplets, fill the empty cells in the order of preference "centre cell > corners > everything else"
   if (cells[1][1] === 0) {
-    myMove(1, 1,'');
+    myMove(1, 1);
     return;
   }
 
@@ -195,6 +195,7 @@ else if (diag2Count === 3) triplet = 'd2';
 
 function myMove(r, c) {
   cells[r][c] = mytok;
+  document.querySelector("._" + String(r + 1) + String(c + 1)).style.color = 'black';
   document.querySelector("._" + String(r + 1) + String(c + 1)).textContent =
     mytok;
   count++;
@@ -241,8 +242,9 @@ function toRed(cell) {
 
 function onClick(cell) {                                     //handling click event
   document.querySelector(cell).addEventListener("click", function () {
-    if (document.querySelector(cell).textContent === ""  && win === 0) {
+    if (document.querySelector(cell).textContent === "."  && win === 0) {
       document.querySelector(cell).textContent = tok;
+      document.querySelector(cell).style.color="black";
       let ui = Number(cell[2]) - 1;
       let uj = Number(cell[3]) - 1;
       count++;
@@ -269,10 +271,12 @@ function reset() {                                        //play again
   count = win = 0;
   document.querySelector('.msg1').textContent = '';
   document.querySelector('.msg2').textContent = '';
+
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 3; j++) {
-        document.querySelector("._" + String(i) + String(j)).textContent = "";
+        document.querySelector("._" + String(i) + String(j)).textContent = ".";
         document.querySelector("._" + String(i) + String(j)).style.backgroundColor = "white";
+        document.querySelector("._" + String(i) + String(j)).style.color = "white";
       }
     }
 }

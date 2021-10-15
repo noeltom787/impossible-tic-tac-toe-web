@@ -66,19 +66,22 @@ button{
 }
 .matrix{
     margin: 2rem 3rem;
- 
 }
 .cell{
-    border: solid .3rem;
+    border: solid .3rem black;
     height: 6rem;
     width: 6rem;
     margin: .125rem 0;
     font-size: 2rem;
+    background-color: white;
+    color: white;
     font-family: inherit;
   padding: 1.5rem 1.5rem;
 }
 .cell:hover {
     background-color:rgb(211, 219, 219);
+    color:rgb(211, 219, 219);
+
 }
 .msg1{
     position: relative;
