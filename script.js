@@ -243,7 +243,9 @@ function toRed(cell) {
 
 function onClick(cell) {                                     //handling click event
   document.querySelector(cell).addEventListener("click", function () {
-    if (document.querySelector(cell).textContent === "."  && win === 0) {
+    if (document.querySelector(cell).textContent === "." && win === 0) {
+      if (count !== 8)
+          document.getElementById('click').play();
       document.querySelector(cell).textContent = tok;
       document.querySelector(cell).style.color="black";
       let ui = Number(cell[2]) - 1;
@@ -273,7 +275,7 @@ function reset() {                                        //play again
   count = win = 0;
   document.querySelector('.msg1').textContent = '';
   document.querySelector('.msg2').textContent = '';
-
+  document.getElementById('resetSound').play();
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 3; j++) {
         document.querySelector("._" + String(i) + String(j)).textContent = ".";
