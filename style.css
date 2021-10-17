@@ -91,8 +91,6 @@ button{
 }
 .cell:hover {
     /* background-color:rgb(211, 219, 219); */
-    height: 6rem;
-    width: 6rem;
     /* color:rgb(211, 219, 219); */
     box-shadow: .2rem .2rem 1rem rgba(0, 0, 0, 0.3);
 }
