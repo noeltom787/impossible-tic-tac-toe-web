@@ -184,10 +184,11 @@ else if (colCount === 3) triplet = 'c';
 else if (diag1Count === 3) triplet = 'd1';
 else if (diag2Count === 3) triplet = 'd2';
   if (triplet != '') {
+    document.getElementById('lose').play();
      changeColor(r, c, triplet);
      document.querySelector('.msg1').textContent = 'YOU';
      document.querySelector('.msg2').textContent = 'LOSE!';
-     win = 1;
+    win = 1;
      return;
   }
   return;
@@ -250,6 +251,7 @@ function onClick(cell) {                                     //handling click ev
       count++;
       cells[ui][uj] = tok;
       if (count === 9) {                                    //check for tie
+      document.getElementById('tie').play();
         for (let i = 1; i <= 3; i++) {
           for (let j = 1; j <= 3; j++) {
             document.querySelector("._" + String(i) + String(j)).style.backgroundColor = '#f1c40f';

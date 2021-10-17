@@ -36,6 +36,9 @@ button{
   padding: .5rem 1rem;
   margin-left: 1rem;
   cursor: pointer;
+  transition: box-shadow .1s;
+  box-shadow: .5rem .5rem 1rem rgba(0, 0, 0, 0.3);
+
 }
 
 .reset:hover{
@@ -43,6 +46,8 @@ button{
   background-color: white;
   padding: .2rem .7rem;
   color: black;
+  box-shadow: none;
+
 }
 .tok{
     border-radius: 0px;
@@ -53,11 +58,15 @@ button{
     padding: .5rem 2rem;
     float: right;
     font-family: inherit;
+    transition: background-color .2s;
+    transition: box-shadow .1s;
+    box-shadow: .5rem .5rem 1rem rgba(0, 0, 0, 0.3);
 }
+
 .tok:hover{
     border: solid .3rem black;
     padding: .2rem 1.7rem;
-
+    box-shadow: .2rem .2rem 1rem rgba(0, 0, 0, 0.3);
 }
 .O{
   margin-right: 1rem;
@@ -71,17 +80,21 @@ button{
     border: solid .3rem black;
     height: 6rem;
     width: 6rem;
-    margin: .125rem 0;
+    margin: .125rem -.1rem;
     font-size: 2rem;
     background-color: white;
     color: white;
     font-family: inherit;
-  padding: 1.5rem 1.5rem;
+    padding: 1.5rem 1.5rem;
+    box-shadow: .5rem .5rem 1rem rgba(0, 0, 0, 0.3);
+    transition: box-shadow .1s;
 }
 .cell:hover {
-    background-color:rgb(211, 219, 219);
-    color:rgb(211, 219, 219);
-
+    /* background-color:rgb(211, 219, 219); */
+    height: 6rem;
+    width: 6rem;
+    /* color:rgb(211, 219, 219); */
+    box-shadow: .2rem .2rem 1rem rgba(0, 0, 0, 0.3);
 }
 .msg1{
     position: relative;
