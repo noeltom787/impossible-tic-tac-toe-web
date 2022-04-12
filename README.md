@@ -7,7 +7,9 @@ Give it a try <a href='https://noeltom787-impossible-tic-tac-toe.netlify.app/' t
 
 ### Dependencies
 
-- [node.js](https://nodejs.org)
+- [nodejs](https://nodejs.org/)
+- [vitejs](https://vitejs.dev/)
+- [threejs](https://threejs.org/)
 
 ```
 git clone https://github.com/noeltom787/impossible-tic-tac-toe-web.git
