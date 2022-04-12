@@ -1,0 +1,52 @@
+@media(max-width:40.6em){
+    h1{
+        font-size: 1.3em;
+    }
+    .box{
+        max-width: 25em;
+    }
+    .reset{
+        font-size: .8em;
+        
+    }
+    .reset:hover{
+    border: solid .15em;
+    padding: .45em 1.1em;
+    }
+    .settings{
+        height: 2.5em;
+    }
+    .tok{
+        font-size: .8em;
+        padding: .6em 1.2em;
+    }
+    .tok:hover{
+        border: solid .1em black;
+        font-size: .8em;
+        padding: .5em 1.1em;
+    }
+    .cell{
+        height: 4em;
+        width: 4em;
+        font-size: .8em;
+        padding: 1em 1em;
+        border-width: .15em;
+    }
+    .msg1,.msg2{
+       font-size: 1em;
+    }
+}
+@media(max-width:19em){
+    .cell{
+        height: 2.8em;
+        width: 2.8em;
+        font-size: .8em;
+        padding: .5em .5em;
+    }
+    .matrix{
+        margin-top: 1em;
+    }
+    .msg1,.msg2{
+        font-size: .8em;
+     }
+}
