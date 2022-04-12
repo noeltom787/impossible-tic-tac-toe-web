@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impossible Tic-Tac-Toe</title>
+    <link href="style.css" rel="stylesheet" />
+    <link href="queries.css" rel="stylesheet" />
+    <link href="./assets/logo1.png" rel="icon" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- <canvas id="bg"></canvas> -->
+    <h1>The Impossible Tic-Tac-Toe Machine</h1>
+    <div class="box">
+      <div class="settings">
+        <button class="reset">Reset</button>
+        <button class="tok O">O</button>
+        <button class="tok X">X</button><br/>
+      </div>
+      <div class="msg1"></div>
+      <div class="msg2"></div>
+      <div class="matrix">
+        <button class="cell _11">.</button>
+        <button class="cell _12">.</button>
+        <button class="cell _13">.</button><br>
+
+        <button class="cell _21">.</button>
+        <button class="cell _22">.</button>
+        <button class="cell _23">.</button><br>
+
+        <button class="cell _31">.</button>
+        <button class="cell _32">.</button>
+        <button class="cell _33">.</button>
+      </div>
+    </div>
+    <audio id="bgm">
+      <source src="./assets/space_bgm.mp3">
+    </audio>
+    <audio id="lose">
+      <source src="./assets/lose.mp3">
+    </audio>
+    <audio id="tie">
+      <source src="./assets/tie.wav">
+    </audio>
+    <audio id="click">
+      <source src="./assets/click_cell.wav">
+    </audio>
+    <audio id="resetSound">
+      <source src="./assets/reset.wav">
+    </audio>
+    <script type= 'module' src="/script.js"></script>
+  </body>
+</html>
