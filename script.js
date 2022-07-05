@@ -1,12 +1,14 @@
 "use strict";
 import './style.css'
 import * as THREE from "three";
+import marsmap from "./assets/marsmap1k.jpg";
 
 //Initial values
 let count = 0, //count no. of moves
   win = 0;
 document.getElementById("bgm").play();
 document.getElementById("bgm").loop = true;
+
 let tok = "X";
 let mytok = "O";
 let cells = [
@@ -14,6 +16,13 @@ let cells = [
   [0, 0, 0],
   [0, 0, 0],
 ];
+const msg1 = document.querySelector('.msg1');
+const expo = document.querySelector('.expo');
+const expo1 = document.querySelector('.expo1');
+const popReset = document.querySelector('.popReset');
+const reset2 = document.querySelector('.reset2');
+const overlay = document.querySelector('.overlay');
+
 
 function logic(tok, mytok, ui, uj) {
     if (count === 1) {
@@ -190,9 +199,24 @@ else if (diag1Count === 3) triplet = 'd1';
 else if (diag2Count === 3) triplet = 'd2';
   if (triplet != '') {
     document.getElementById('lose').play();
-     changeColor(r, c, triplet);
-     document.querySelector('.msg1').textContent = 'YOU';
-     document.querySelector('.msg2').textContent = 'LOSE!';
+    changeColor(r, c, triplet);
+    msg1.style.color = 'red';
+    msg1.textContent = 'YOU LOSE!';
+
+    plcrash = 1;
+    setTimeout(function(){
+      expo.classList.remove('hidden');
+      expo1.classList.remove('hidden');
+      setTimeout(function(){
+        expo.classList.add('hidden');
+        plcrash = 0;
+      }, 3200);
+      setTimeout(function(){
+        popReset.style.display = 'flex';
+        overlay.classList.remove('hidden');
+      }, 1000);
+    }, 3350);
+    
     win = 1;
      return;
   }
@@ -201,7 +225,7 @@ else if (diag2Count === 3) triplet = 'd2';
 
 function myMove(r, c) {
   cells[r][c] = mytok;
-  document.querySelector("._" + String(r + 1) + String(c + 1)).style.color = 'black';
+  document.querySelector("._" + String(r + 1) + String(c + 1)).style.color = 'white';
   document.querySelector("._" + String(r + 1) + String(c + 1)).textContent =
     mytok;
   count++;
@@ -249,22 +273,23 @@ function onClick(cell) {                                     //handling click ev
   document.querySelector(cell).addEventListener("click", function () {
     if (document.querySelector(cell).textContent === "." && win === 0) {
       if (count !== 8)
-          document.getElementById('click').play();
+          // document.getElementById('click').play();
       document.querySelector(cell).textContent = tok;
-      document.querySelector(cell).style.color="black";
+      document.querySelector(cell).style.color="white";
       let ui = Number(cell[2]) - 1;
       let uj = Number(cell[3]) - 1;
       count++;
       cells[ui][uj] = tok;
       if (count === 9) {                                    //check for tie
-      document.getElementById('tie').play();
+      // document.getElementById('tie').play();
         for (let i = 1; i <= 3; i++) {
           for (let j = 1; j <= 3; j++) {
             document.querySelector("._" + String(i) + String(j)).style.backgroundColor = '#f1c40f';
           }
         }
-        document.querySelector('.msg1').textContent = "TIE";
-        //document.querySelector('.msg1').style.animationPlayState='running';
+        msg1.style.color = "#f1c40f";
+        msg1.textContent = "TIE";
+        //msg1.style.animationPlayState='running';
       }
       logic(tok, mytok, ui, uj);
     }
@@ -278,25 +303,32 @@ function reset() {                                        //play again
       [0, 0, 0],
     ];
   count = win = 0;
-  document.querySelector('.msg1').textContent = '';
-  //document.querySelector('.msg1').style.animationPlayState='paused';
-  document.querySelector('.msg2').textContent = '';
-  document.getElementById('resetSound').play();
+  msg1.textContent = '';
+  expo1.classList.add('hidden');
+  popReset.style.display = 'none';
+  overlay.classList.add('hidden');
+  // var id = window.setTimeout(function() {}, 0);
+
+  // while (id--) {
+  //     window.clearTimeout(id); // will do nothing if no timeout with id is present
+  // }
+  //msg1.style.animationPlayState='paused';
+  //document.querySelector('.msg2').textContent = '';
+  // document.getElementById('resetSound').play();
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 3; j++) {
         document.querySelector("._" + String(i) + String(j)).textContent = ".";
-        document.querySelector("._" + String(i) + String(j)).style.backgroundColor = "white";
-        document.querySelector("._" + String(i) + String(j)).style.color = "white";
+        document.querySelector("._" + String(i) + String(j)).style.backgroundColor = "#ffffff07";
+        document.querySelector("._" + String(i) + String(j)).style.color = "#ffffff07";
       }
-    }
+  }
+  plsphere.position.z = -100;
 }
 function changeSymbol(sym) {
   document.querySelector(sym).addEventListener("click", function () {
     if (tok != sym[1]) {
-      document.querySelector(sym).style.backgroundColor = 'black';
-      document.querySelector(sym).style.color = 'white';
-      document.querySelector('.' + tok).style.backgroundColor = 'white';
-      document.querySelector('.' + tok).style.color = 'black';
+      document.querySelector(sym).style.boxShadow = "0px 5px 10px 0px rgba(0, 255, 255, 0.7)";
+      document.querySelector('.' + tok).style.boxShadow = "none";
       mytok = tok;
       tok = sym[1];
       reset();
@@ -318,11 +350,15 @@ changeSymbol(".O");
 document.querySelector(".reset").addEventListener("click", function () {
   reset();
 });
-
+document.querySelector(".reset2").addEventListener("click", function () {
+  reset();
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////STARFIELD////////////////////////////////////////
 ///////////////////////////////////////////////
+
+let plcrash = 0;
 
 const scene = new THREE.Scene();
 let stars = [];
@@ -341,7 +377,7 @@ document.body.appendChild(renderer.domElement);
 for ( var z= -1000; z < 2000; z+=20 ) {
 		
   // Make a sphere
-  var geometry   = new THREE.SphereGeometry(0.5, 32, 32)
+  var geometry  = new THREE.SphereBufferGeometry(0.5, 32, 32)
   var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
   var sphere = new THREE.Mesh(geometry, material)
 
@@ -357,6 +393,28 @@ for ( var z= -1000; z < 2000; z+=20 ) {
   stars.push(sphere); 
 }
 
+// function planetCrash() {
+  let plgeometry  = new THREE.SphereGeometry(1,32,32)
+  let plmaterial = new THREE.MeshBasicMaterial({
+    map: new THREE.TextureLoader().load(marsmap)
+  } );
+  let plsphere = new THREE.Mesh(plgeometry, plmaterial);
+scene.add(plsphere);
+plsphere.position.z = -100;
+//loseanime();
+//function loseanime() {
+  //renderer.render(scene, camera);
+  // for (let i = 0; ; i++) {
+  //   console.log(plsphere.position.z);
+  //   plsphere.position.z += .01;
+  //   if (plsphere.position.z > 2.5)break;
+  //   //requestAnimationFrame( loseanime );
+  // }
+//}
+//loseanime();
+// }
+
+
 function animateStars() { 
 				
   // loop through each star
@@ -369,6 +427,14 @@ function animateStars() {
     if(star.position.z>1000) star.position.z-=2000; 
     
   }
+  
+  if (plcrash == 1) {
+      plsphere.position.z += .5;
+  }
+  if (plsphere.position.z > 0) {
+    plcrash = 0;
+    plsphere.position.z = 2;
+  }
 
 }
 
@@ -378,7 +444,6 @@ function animate() {
   requestAnimationFrame( animate );
 
 }
-console.log('baabab');
 animate();
 
 
