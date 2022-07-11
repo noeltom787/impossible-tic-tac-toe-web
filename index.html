@@ -15,18 +15,27 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"> 
+    <link rel="preload" href="./assets/explosion.gif" as="image" type="image/gif" crossorigin="anonymous"> 
+    <link rel="preload" href="./assets/lose1.mp3" as="audio" type="audio/mp3" crossorigin="anonymous"> 
+    <link rel="preload" href="./assets/space_bgm.mp3" as="audio" type="audio/mp3" crossorigin="anonymous"> 
   </head>
   <body>
     <!-- <canvas id="bg"></canvas> -->
+    <img class ="expo hidden" alt="explosion" src="./assets/explosion.gif">
+    <img class ="expo1 hidden" alt="explosion" src="./assets/explosionfreeze.jpg">
+    <img class ="cockpit" alt="spaceship" src="./assets/cockpit.png">
     <h1>The Impossible Tic-Tac-Toe Machine</h1>
+    <div class="msg1"></div>
     <div class="box">
       <div class="settings">
-        <button class="reset">Reset</button>
+        <button class="sett"><ion-icon name="settings-outline"></ion-icon></button>
+        <button class="reset"><ion-icon name="refresh-outline"></ion-icon></button>
+        <div class="empty"></div>
         <button class="tok O">O</button>
         <button class="tok X">X</button><br/>
       </div>
-      <div class="msg1"></div>
-      <div class="msg2"></div>
+      
       <div class="matrix">
         <button class="cell _11">.</button>
         <button class="cell _12">.</button>
@@ -41,11 +50,16 @@
         <button class="cell _33">.</button>
       </div>
     </div>
+      <div class="popReset">
+        <div class="popResetText">Play Again</div>
+        <button class="reset2"><ion-icon name="refresh-outline"></ion-icon></button>
+      </div>
+    <div class="overlay hidden"></div>
     <audio id="bgm">
       <source src="./assets/space_bgm.mp3">
     </audio>
     <audio id="lose">
-      <source src="./assets/lose.mp3">
+      <source src="./assets/lose1.mp3">
     </audio>
     <audio id="tie">
       <source src="./assets/tie.wav">
@@ -57,5 +71,7 @@
       <source src="./assets/reset.wav">
     </audio>
     <script type= 'module' src="/script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
