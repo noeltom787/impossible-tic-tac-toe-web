@@ -365,8 +365,8 @@ let stars = [];
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
 camera.position.z = 5;	
 
-const renderer = new THREE.WebGLRenderer(//{
-  //canvas: document.querySelector("#bg"),}
+const renderer = new THREE.WebGLRenderer({
+  powerPreference : "high-performance",}
 );
 //renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -374,10 +374,10 @@ camera.position.setZ(5);
 document.body.appendChild(renderer.domElement);
 //renderer.render(scene, camera);
 
+var geometry  = new THREE.SphereBufferGeometry(0.5, 32, 32)
 for ( var z= -1000; z < 2000; z+=20 ) {
 		
   // Make a sphere
-  var geometry  = new THREE.SphereBufferGeometry(0.5, 32, 32)
   var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
   var sphere = new THREE.Mesh(geometry, material)
 
@@ -392,6 +392,10 @@ for ( var z= -1000; z < 2000; z+=20 ) {
 
   stars.push(sphere); 
 }
+const light = new THREE.PointLight( 0xff0000, 1, 100 );
+light.position.set(50, 50, 50);
+light.castShadow = true;
+scene.add( light );
 
 // function planetCrash() {
   let plgeometry  = new THREE.SphereGeometry(1,32,32)
@@ -418,18 +422,17 @@ plsphere.position.z = -100;
 function animateStars() { 
 				
   // loop through each star
-  for(var i=0; i<stars.length; i++) {
+  for (var i = 0; i < stars.length; i++) {
     
-    let star = stars[i]; 
-    star.position.z +=  i/10;
+    let star = stars[i];
+    star.position.z += i / 10;
       
     // if the particle is too close move it to the back
-    if(star.position.z>1000) star.position.z-=2000; 
+    if (star.position.z > 1000) star.position.z -= 2000;
     
   }
-  
   if (plcrash == 1) {
-      plsphere.position.z += .5;
+    plsphere.position.z += .5;
   }
   if (plsphere.position.z > 0) {
     plcrash = 0;

@@ -5,7 +5,7 @@ canvas{
   position:fixed;
   top:0;
   left:0;
-  z-index:-2;
+  z-index:-3;
 }
 body{
 background-color: black;
@@ -17,10 +17,15 @@ text-align: center;
 line-height: 1.5;
 /* overflow: hidden; */
 }
-h1{
-  animation: animate 5s linear infinite;
+.cockpit{
+  position:absolute;
+  top: 0;
+  left: 0;
+  height:100%;
+  width: 100%;
+  z-index: -1;
 }
-@keyframes animate{
+/* @keyframes animate{
   0%,18%,24%,25%,30%,42%,45%,57%,67%,80%,90%{
     color: rgb(34, 49, 110);
     text-shadow: none;
@@ -33,7 +38,7 @@ h1{
                   0 0 80px rgb(11, 164, 230),
                   0 0 160px rgb(11, 164, 230);
   }
-}
+} */
 button{
 cursor: pointer;
 }
@@ -46,7 +51,7 @@ cursor: pointer;
     /* margin-left:-256px; */
   height: 100%;
   width: 100%;
-  z-index: -1;
+  z-index: -2;
 }
 .expo1{
   position: absolute;
@@ -55,7 +60,7 @@ cursor: pointer;
   height: 100%;
   width: 100%;
   filter: blur(1rem);
-  z-index: -1;
+  z-index: -2;
   animation: animateexpo 2s ease-in;
 }
 @keyframes animateexpo{
