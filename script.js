@@ -3,6 +3,17 @@ import './style.css'
 import * as THREE from "three";
 import marsmap from "./assets/marsmap1k.jpg";
 
+/////LOADING ANIMATION
+document.onreadystatechange = function() {
+  if (document.readyState !== "complete") {
+      document.querySelector(".loading").style.visibility = "visible";
+  } else {
+      document.querySelector(".loading").style.display = "none";
+      document.querySelector(".whitescreen").classList.add("hidden");
+  }
+};
+
+
 //Initial values
 let count = 0, //count no. of moves
   win = 0;
