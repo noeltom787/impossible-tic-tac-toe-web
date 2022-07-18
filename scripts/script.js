@@ -1,18 +1,10 @@
 "use strict";
-import './style.css'
-import * as THREE from "three";
-import marsmap from "./assets/marsmap1k.jpg";
+import '../css/style.css'
+import { plsphereReset,updatePlcrash } from './space';
+import loadScreen from './loading'
 
 /////LOADING ANIMATION
-document.onreadystatechange = function() {
-  if (document.readyState !== "complete") {
-      document.querySelector(".loading").style.visibility = "visible";
-  } else {
-      document.querySelector(".loading").style.display = "none";
-      document.querySelector(".whitescreen").classList.add("hidden");
-  }
-};
-
+loadScreen();
 
 //Initial values
 let count = 0, //count no. of moves
@@ -214,13 +206,13 @@ else if (diag2Count === 3) triplet = 'd2';
     msg1.style.color = 'red';
     msg1.textContent = 'YOU LOSE!';
 
-    plcrash = 1;
+    updatePlcrash(1);
     setTimeout(function(){
       expo.classList.remove('hidden');
       expo1.classList.remove('hidden');
       setTimeout(function(){
         expo.classList.add('hidden');
-        plcrash = 0;
+        updatePlcrash(0);
       }, 3200);
       setTimeout(function(){
         popReset.style.display = 'flex';
@@ -333,7 +325,7 @@ function reset() {                                        //play again
         document.querySelector("._" + String(i) + String(j)).style.color = "#ffffff07";
       }
   }
-  plsphere.position.z = -100;
+  plsphereReset();
 }
 function changeSymbol(sym) {
   document.querySelector(sym).addEventListener("click", function () {
@@ -364,164 +356,3 @@ document.querySelector(".reset").addEventListener("click", function () {
 document.querySelector(".reset2").addEventListener("click", function () {
   reset();
 });
-
-//////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////STARFIELD////////////////////////////////////////
-///////////////////////////////////////////////
-
-let plcrash = 0;
-
-const scene = new THREE.Scene();
-let stars = [];
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-camera.position.z = 5;	
-
-const renderer = new THREE.WebGLRenderer({
-  powerPreference : "high-performance",}
-);
-//renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(5);
-document.body.appendChild(renderer.domElement);
-//renderer.render(scene, camera);
-
-var geometry  = new THREE.SphereBufferGeometry(0.5, 32, 32)
-for ( var z= -1000; z < 2000; z+=20 ) {
-		
-  // Make a sphere
-  var material = new THREE.MeshBasicMaterial( {color: 0xffffff} );
-  var sphere = new THREE.Mesh(geometry, material)
-
-  sphere.position.x = Math.random() * 1000 - 500;
-  sphere.position.y = Math.random() * 1000 - 500;
-  sphere.position.z = z;
-
-  // scale it up a bit
-  sphere.scale.x = sphere.scale.y = 2;
-
-  scene.add( sphere );
-
-  stars.push(sphere); 
-}
-const light = new THREE.PointLight( 0xff0000, 1, 100 );
-light.position.set(50, 50, 50);
-light.castShadow = true;
-scene.add( light );
-
-// function planetCrash() {
-  let plgeometry  = new THREE.SphereGeometry(1,32,32)
-  let plmaterial = new THREE.MeshBasicMaterial({
-    map: new THREE.TextureLoader().load(marsmap)
-  } );
-  let plsphere = new THREE.Mesh(plgeometry, plmaterial);
-scene.add(plsphere);
-plsphere.position.z = -100;
-//loseanime();
-//function loseanime() {
-  //renderer.render(scene, camera);
-  // for (let i = 0; ; i++) {
-  //   console.log(plsphere.position.z);
-  //   plsphere.position.z += .01;
-  //   if (plsphere.position.z > 2.5)break;
-  //   //requestAnimationFrame( loseanime );
-  // }
-//}
-//loseanime();
-// }
-
-
-function animateStars() { 
-				
-  // loop through each star
-  for (var i = 0; i < stars.length; i++) {
-    
-    let star = stars[i];
-    star.position.z += i / 10;
-      
-    // if the particle is too close move it to the back
-    if (star.position.z > 1000) star.position.z -= 2000;
-    
-  }
-  if (plcrash == 1) {
-    plsphere.position.z += .5;
-  }
-  if (plsphere.position.z > 0) {
-    plcrash = 0;
-    plsphere.position.z = 2;
-  }
-
-}
-
-function animate() {
-  renderer.render( scene, camera );
-  animateStars();
-  requestAnimationFrame( animate );
-
-}
-animate();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //Torus
-
-// const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-// const material = new THREE.MeshStandardMaterial({color: 0xFF6347})
-// const torus = new THREE.Mesh(geometry, material);
-// scene.add(torus);
-
-// //Light source
-
-// const pointLight = new THREE.PointLight(0xffffff);
-// pointLight.position.set(10, 10, 10)
-// const ambientLight = new THREE.AmbientLight(0xffffff);
-// scene.add(pointLight,ambientLight);
-
-// //stars
-
-// let stars = [];
-// function addStar() {
-//   const geometry = new THREE.SphereGeometry(.15, 24, 10);
-//   const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-//   const star = new THREE.Mesh(geometry, material);
-//   const x = Math.random() * 100-50;
-//   const y = Math.random() * 100-50;
-//   const z = Math.random() * 100-50;
-//   star.position.set(x, y, 0);
-//   stars.push(star);
-//   scene.add(star);
-// }
-// let k = .1;
-// console.log(camera.position.z);
-// Array(200).fill().forEach(addStar);
-// function animate() {
-//    //torus.rotation.x += 0.01;
-//   // if (torus.position.x === 50 | torus.position.x === -50 )//document.body.getBoundingClientRect().right/2)
-//   //   k = -1 * k;
-//   //  torus.position.x += k;
-//   // //star.rotation = 1.16;
-//   // torus.rotation.y += 0.005;
-//   // //torus.rotation.z += 0.01;
-//   stars.forEach(ele => {
-//     // ele.position.x += Math.random()>0.5?.1:-.1;
-//     // ele.position.y += Math.random()>0.5?.1:-.1;
-//     if (ele.position.z === camera.position.z || ele.position.z === -camera.position.z  )
-//       k = k * (-.1);
-//      ele.position.z += k;
-
-//   })
-//   renderer.render(scene, camera);
-//   requestAnimationFrame(animate);
-// }
-// animate();
